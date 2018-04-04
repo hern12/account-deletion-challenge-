@@ -1,0 +1,33 @@
+{
+  "name": "account-deletion-challenge",
+  "license": "MIT",
+  "scripts": {
+    "client": "cross-env NODE_ENV=development parcel src/index.html --out-dir out"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "cross-env": "5.1.4"
+  },
+  "dependencies": {
+    "autoprefixer": "8.2.0",
+    "babel-preset-react-app": "3.1.1",
+    "lodash": "4.17.5",
+    "parcel-bundler": "latest",
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0"
+  },
+  "postcss": {
+    "modules": false,
+    "plugins": {
+      "autoprefixer": {
+        "browsers": [
+          ">1%",
+          "last 4 versions",
+          "Firefox ESR",
+          "not ie < 9"
+        ],
+        "flexbox": "no-2009"
+      }
+    }
+  }
+}
