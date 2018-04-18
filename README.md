@@ -28,6 +28,8 @@ You can go back and forth through the steps anytime, but the whole process is co
 - You must be able to run `npm run client` against your code successfully and open http://localhost:1234/ to perform the intended tasks according to the specifications.
 - You will not be judged by the appearance of the web, which means you may leave `index.css` and every `style={{ ... }}` prop untouched.
 - You should add no more third-party library.
+- You may upgrade React from version 15 to 16.
+- You may add a test framework of your choice.
 
 ### Expectations
 
