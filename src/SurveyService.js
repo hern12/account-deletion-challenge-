@@ -16,14 +16,6 @@ const CANCEL_WORKSPACE = {
   }
 }
 
-const getCustomVariables = (customData) => {
-  const customVariables = {
-    name: customData.user.name,
-    workspace_display_name: customData.workspace.displayName,
-  }
-  return customVariables
-}
-
 const getChoiceID = (key) => {
   switch (key) {
     case 'dont_understand': return CANCEL_WORKSPACE.CHOICE_ID.DONT_UNDERSTAND
@@ -38,7 +30,7 @@ const getChoiceID = (key) => {
   }
 }
 
-const getSurveyPayload = (feedbackRefs, comment, data) => {
+const getSurveyPayload = (feedbackRefs, comment) => {
   const surveyAnswers = _.map(feedbackRefs, ref => {
     if (getChoiceID(ref.key) === CANCEL_WORKSPACE.CHOICE_ID.OTHERS) {
       return {
@@ -50,7 +42,6 @@ const getSurveyPayload = (feedbackRefs, comment, data) => {
     }
   })
   const surveyPayload = {
-    custom_variables: getCustomVariables(data),
     pages: [
       {
         id: CANCEL_WORKSPACE.PAGE_ID,
@@ -74,8 +65,8 @@ const getSurveyPayload = (feedbackRefs, comment, data) => {
   return surveyPayload
 }
 
-export const submitToSurveyMonkeyDeleteAccount = async ({ feedbackRefs, comment, data }) => {
-  const surveyPayload = getSurveyPayload(feedbackRefs, comment, data)
+export const submitToSurveyMonkeyDeleteAccount = async ({ feedbackRefs, comment }) => {
+  const surveyPayload = getSurveyPayload(feedbackRefs, comment)
 
   const response = await window.fetch('https://us-central1-tw-account-deletion-challenge.cloudfunctions.net/submitSurvey', {
     method: 'POST',
