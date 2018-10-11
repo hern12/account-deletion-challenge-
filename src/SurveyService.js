@@ -1,13 +1,5 @@
 import _ from 'lodash'
 
-const SURVEY_MONKEY_TOKEN = '[MOCK_TOKEN]'
-
-const COLLECTORS_ID = {
-  CANCEL_WORKSPACE: '161532116',
-  DELETE_ACCOUNT: '162490866',
-  TEST: '162280734'
-}
-
 const CANCEL_WORKSPACE = {
   PAGE_ID: '48414504',
   MULTIPLE_CHOICES_ID: '162037852',
@@ -23,13 +15,6 @@ const CANCEL_WORKSPACE = {
     OTHERS: '1170286307'
   }
 }
-
-const cancelSubscriptionApiUrl =
-  'https://api.surveymonkey.net/v3/collectors/' + COLLECTORS_ID.CANCEL_WORKSPACE + '/responses'
-const deleteAccountApiUrl =
-  'https://api.surveymonkey.net/v3/collectors/' + COLLECTORS_ID.DELETE_ACCOUNT + '/responses'
-const testApiUrl =
-  'https://api.surveymonkey.net/v3/collectors/' + COLLECTORS_ID.TEST + '/responses'
 
 const getCustomVariables = (customData) => {
   const customVariables = {
@@ -89,36 +74,18 @@ const getSurveyPayload = (feedbackRefs, comment, data) => {
   return surveyPayload
 }
 
-const getSubmitToSurveyMonkey = (apiUrl) => {
-  return ({ feedbackRefs, comment, data }) => {
-    const surveyPayload = getSurveyPayload(feedbackRefs, comment, data)
+export const submitToSurveyMonkeyDeleteAccount = async ({ feedbackRefs, comment, data }) => {
+  const surveyPayload = getSurveyPayload(feedbackRefs, comment, data)
 
-    // Note that the below comment block resembles the actual implementation
-    /*
-    window.fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${SURVEY_MONKEY_TOKEN}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(surveyPayload),
-    })
-    */
-
-    // Simulate a success/failure response
-    // Note that there is 30% chance of getting error from the server
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (Math.random() < 0.3) {
-          reject({ message: 'Error submitting SurveyMonkey', surveyPayload })
-        } else {
-          resolve()
-        }
-      }, 1000)
-    })
+  const response = await window.fetch('https://us-central1-tw-account-deletion-challenge.cloudfunctions.net/submitSurvey', {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(surveyPayload),
+  })
+  if (response.status !== 200) {
+    throw new Error('Error submitting SurveyMonkey')
   }
 }
-
-export const submitToSurveyMonkeyCancelSubscription = getSubmitToSurveyMonkey(cancelSubscriptionApiUrl)
-export const submitToSurveyMonkeyDeleteAccount = getSubmitToSurveyMonkey(deleteAccountApiUrl)

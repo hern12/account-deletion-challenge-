@@ -31,78 +31,16 @@ export default class MockDataProvider extends React.Component {
 
       transferableMembers: [],
 
-      fetchRelatedWorkspaces: () => {
-        // Resemble fetching requiredTransferWorkspaces, deleteWorkspaces, and transferableMembers from the server
-        /*
-        window.fetch('/api/fetch-related-workspaces', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ userId: this.state.user._id }),
-        }).then((data) => {
-          this.setState({
-            loading: false,
-            requiredTransferWorkspaces: data.requiredTransferWorkspaces,
-            deleteWorkspaces: data.deleteWorkspaces,
-            terminateAccountStatus: LoadState.handleLoaded(this.state.terminateAccountStatus)
-          })
-        }).catch(() => {
-          this.setState({
-            terminateAccountStatus: LoadState.handleLoadFailedWithError('Error deleting account')(this.state.terminateAccountStatus)
-          })
+      fetchRelatedWorkspaces: async () => {
+        const response = await window.fetch(`https://us-central1-tw-account-deletion-challenge.cloudfunctions.net/fetchWorkspaces?userId=${this.state.user._id}`, {
+          mode: 'cors',
         })
-        */
-
-        // Simulate fetching requiredTransferWorkspaces, deleteWorkspaces, and transferableMembers from the server
-        setTimeout(() => {
-          this.setState({
-            loading: false,
-            requiredTransferWorkspaces: [
-              {
-                spaceId: 'workspace1',
-                displayName: 'Lightning strike',
-                transferableMembers: [
-                  {
-                    _id: 'user2',
-                    name: 'Ryan Lynch'
-                  },
-                  {
-                    _id: 'user3',
-                    name: 'Riker Lynch'
-                  },
-                  {
-                    _id: 'user4',
-                    name: 'Rydel Lynch'
-                  }
-                ]
-              },
-              {
-                spaceId: 'workspace2',
-                displayName: 'Time machine',
-                transferableMembers: [
-                  {
-                    _id: 'user5',
-                    name: 'Edward Bayer',
-                    workspaceId: 'workspace3'
-                  },
-                  {
-                    _id: 'user6',
-                    name: 'Eli Brook',
-                    workspaceId: 'workspace3'
-                  }
-                ]
-              }
-            ],
-            deleteWorkspaces: [
-              {
-                spaceId: 'workspace3',
-                displayName: 'Moon landing'
-              }
-            ]
-          })
-        }, 1500)
+        const data = await response.json()
+        this.setState({
+          loading: false,
+          requiredTransferWorkspaces: data.requiredTransferWorkspaces,
+          deleteWorkspaces: data.deleteWorkspaces,
+        })
       },
 
       transferOwnershipStatus: {
@@ -114,96 +52,62 @@ export default class MockDataProvider extends React.Component {
       transferOwnership: (user, workspace) => {
         this.setState({
           transferOwnershipStatus: {
-            workspaceId: workspace._id,
+            workspaceId: workspace.spaceId,
             toUserId: this.state.user._id,
             ...LoadState.loading
           }
-        }, () => {
-          // Resemble sending transferOwnershipStatus to the server
-          /*
-          window.fetch('/api/check-transfer-ownership', {
+        }, async () => {
+          const response = await window.fetch('https://us-central1-tw-account-deletion-challenge.cloudfunctions.net/checkOwnership', {
             method: 'POST',
+            mode: 'cors',
             headers: {
-              'Accept': 'application/json',
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              workspaceId: workspace._id,
+              workspaceId: workspace.spaceId,
               fromUserId: this.state.user._id,
               toUserId: user._id
             }),
-          }).then(() => {
+          })
+          if (response.status === 200) {
             this.setState({
               transferOwnershipStatus: {
-                workspaceId: workspace._id,
+                workspaceId: workspace.spaceId,
                 toUserId: user._id,
                 ...LoadState.completed
               }
             })
-          }).catch(() => {
+          } else {
             this.setState({
               transferOwnershipStatus: {
-                workspaceId: workspace._id,
+                workspaceId: workspace.spaceId,
                 toUserId: user._id,
                 ...LoadState.error
               }
             })
-          })
-          */
-
-          // Simulate sending transferOwnershipStatus to the server
-          // Note that there is 30% chance of getting error from the server
-          setTimeout(() => {
-            this.setState({
-              transferOwnershipStatus: {
-                workspaceId: workspace._id,
-                fromUserId: this.state.user._id,
-                toUserId: user._id,
-                ...(Math.random() < 0.3 ? LoadState.error : LoadState.completed)
-              }
-            })
-          }, 1000)
+          }
         })
       },
 
-      terminateAccount: (payload) => {
-        // Resemble sending payload to the server
-        /*
-        window.fetch('/api/terminate-account', {
+      terminateAccount: async (payload) => {
+        // Note that there is 30% chance of getting error from the server
+        const response = await window.fetch('https://us-central1-tw-account-deletion-challenge.cloudfunctions.net/terminateAccount', {
           method: 'POST',
+          mode: 'cors',
           headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(payload),
-        }).then(() => {
+        })
+        if (response.status === 200) {
           this.setState({
             terminateAccountStatus: LoadState.handleLoaded(this.state.terminateAccountStatus)
           })
-        }).catch(() => {
+        } else {
           this.setState({
             terminateAccountStatus: LoadState.handleLoadFailedWithError('Error deleting account')(this.state.terminateAccountStatus)
           })
-        })
-        */
-
-        // Simulate sending payload to the server
-        // Note that there is 30% chance of getting error from the server
-        this.setState({
-          terminateAccountStatus: LoadState.handleLoadRequested(this.state.terminateAccountStatus)
-        }, () => {
-          setTimeout(() => {
-            if (Math.random() < 0.3) {
-              this.setState({
-                terminateAccountStatus: LoadState.handleLoaded(this.state.terminateAccountStatus)
-              })
-            } else {
-              this.setState({
-                terminateAccountStatus: LoadState.handleLoadFailedWithError('Error deleting account')(this.state.terminateAccountStatus)
-              })
-            }
-          }, 5000)
-        })
+        }
       },
 
       terminateAccountError: (error) => {
