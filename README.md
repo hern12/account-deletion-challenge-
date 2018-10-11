@@ -16,20 +16,19 @@ Moving on, you are forced to do the exit survey. Marking one or multiple answers
 
 Finally, you need to confirm the account deletion by typing your email, hard-coded as `ross@example.com`, and mark the acknowledgment check-box. After that, calling `/api/terminate-account` will tell the server to transfer the ownership that is previously chosen in the first step, delete your account, and the web will redirect you to http://www.example.com.
 
-You can go back and forth through the steps anytime, but the whole process is considered complete when clicking **Delete my account** button.
+You can go back and forth through the steps anytime, but the whole process is considered complete when clicking _Delete my account_ button.
 
 ### Instructions
 
-- You are instructed to refactor mainly JavaScript files (`*.js`) inside `src` directory, except `index.js`.
+- You are instructed to refactor mainly JavaScript files (`*.js`) inside `src` directory.
 - You may amend, move, or delete some of the existing functionality even it breaks the specifications as long as you see fit.
 - You may add new functionality in addition to the specifications as you see fit.
 - You may rename the files and React components as you see fit.
-- You must be able to explain the reasons behind your code changes along with its trade-off.
+- You must be able to explain the reasons behind your code changes along with its trade-off in a verbal communication or a written document.
 - You must be able to run `npm run client` against your code successfully and open http://localhost:1234/ to perform the intended tasks according to the specifications.
+- You must add at least one test case of your choice using black-box testing technique.
 - You will not be judged by the appearance of the web, which means you may leave `index.css` and every `style={{ ... }}` prop untouched.
-- You should add no more third-party library.
 - You may upgrade React from version 15 to 16.
-- You may add a test framework of your choice.
 
 ### Expectations
 
