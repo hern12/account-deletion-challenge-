@@ -3,7 +3,7 @@ const cors = require('cors')({ origin: true })
 const _ = require('lodash')
 
 module.exports = functions.https.onRequest((request, response) =>
-  cors(request, response, () => {
+  cors(request, response, async () => {
     if (request.method !== 'POST') {
       return response.sendStatus(405)
     }
@@ -18,12 +18,16 @@ module.exports = functions.https.onRequest((request, response) =>
       return response.sendStatus(400)
     }
 
-    setTimeout(() => {
-      if (Math.random() <= 0.3) {
-        response.sendStatus(409)
-      } else {
-        response.sendStatus(200)
-      }
-    }, 3000)
+    // Simulate an internal server error
+    if (Math.random() <= 0.1) {
+      return response.sendStatus(500)
+    }
+
+    // Simulate a slowness
+    if (Math.random() <= 0.5) {
+      await sleep(3000)
+    }
+
+    response.sendStatus(200)
   })
 )
