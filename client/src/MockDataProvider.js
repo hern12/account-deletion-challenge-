@@ -18,11 +18,6 @@ export default class MockDataProvider extends React.Component {
         email: 'ross@example.com',
       },
 
-      currentWorkspace: {
-        spaceId: 'workspace1',
-        displayName: 'Lightning strike',
-      },
-
       loading: true,
 
       requiredTransferWorkspaces: [],

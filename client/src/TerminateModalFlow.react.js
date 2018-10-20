@@ -13,7 +13,6 @@ import AssignOwnership from './AssignOwnership.react'
 export default class TerminateModalFlow extends React.Component {
   static propTypes = {
     user: React.PropTypes.object.isRequired,
-    currentWorkspace: React.PropTypes.object.isRequired,
     loading: React.PropTypes.bool,
     requiredTransferWorkspaces: React.PropTypes.array,
     deleteWorkspaces: React.PropTypes.array,
