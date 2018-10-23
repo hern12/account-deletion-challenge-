@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import './index.css'
 import MockDataProvider from './MockDataProvider'
-import TerminateModalFlow from './TerminateModalFlow.react'
+import TerminateModalFlow from './components/TerminateModalFlow.react'
 
 ReactDOM.render(
   <MockDataProvider>

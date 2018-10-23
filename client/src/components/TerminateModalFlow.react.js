@@ -2,12 +2,11 @@ import _ from 'lodash'
 import React from 'react'
 
 import ConfirmEmailModal from './ConfirmEmailModal.react'
-import TransferOwnershipModal, {
-  WorkspaceGroupRows,
-} from './TransferOwnershipModal.react'
+import TransferOwnershipModal from './TransferOwnershipModal.react'
+import WorkspaceGroupRows from './WorkspaceGroupRows.react'
 import FeedbackSurveyModal from './FeedbackSurveyModal.react'
-import { submitToSurveyMonkeyDeleteAccount } from './SurveyService'
-import * as LoadState from './LoadState'
+import { submitToSurveyMonkeyDeleteAccount } from '../Services/SurveyService'
+import * as LoadState from '../LoadState'
 import AssignOwnership from './AssignOwnership.react'
 
 export default class TerminateModalFlow extends React.Component {
@@ -104,6 +103,13 @@ export default class TerminateModalFlow extends React.Component {
     submitToSurveyMonkeyDeleteAccount(surveyPayload)
   }
 
+  getFeedBack = (feedbackRefs) => {
+    return _.map(feedbackRefs, ref => ({
+      reason: ref.key,
+      comment: ref.value
+    }))
+  }
+
   onSetNextPage = () => {
     if (this.state.activeModal === 'transfer') {
       this.setState({ activeModal: 'feedback' })
@@ -111,10 +117,7 @@ export default class TerminateModalFlow extends React.Component {
       const feedbackRefs = this.getRefsValues(this.refs, 'feedbackForm')
       this.setState({
         activeModal: 'confirm',
-        feedbacks: _.map(feedbackRefs, ref => ({
-          reason: ref.key,
-          comment: ref.value,
-        })),
+        feedbacks: this.getFeedBack(feedbackRefs)
       })
     }
     this.submitSurvey()
@@ -122,10 +125,16 @@ export default class TerminateModalFlow extends React.Component {
 
   onGoToPreviousStep = () => {
     if (this.state.activeModal === 'feedback') {
-      this.setState({ activeModal: 'transfer' })
+      const feedbackRefs = this.getRefsValues(this.refs, 'feedbackForm')
+      this.setState({
+         activeModal: 'transfer',
+         feedbacks: this.getFeedBack(feedbackRefs)
+      })
     }
     if (this.state.activeModal === 'confirm') {
-      this.setState({ activeModal: 'feedback' })
+      this.setState({ 
+        activeModal: 'feedback',
+      })
     }
   }
 
@@ -161,11 +170,9 @@ export default class TerminateModalFlow extends React.Component {
   renderTransferModal() {
     const transferData = this.getTransferData()
     const totalAssigned = transferData.length
-    const totalWorkspaceRequiredTransfer = this.props.requiredTransferWorkspaces
-      .length
+    const totalWorkspaceRequiredTransfer = this.props.requiredTransferWorkspaces.length
     const totalWorkspaceDelete = this.props.deleteWorkspaces.length
-    const disabledNextPage =
-      totalAssigned < totalWorkspaceRequiredTransfer || this.props.loading
+    const disabledNextPage = totalAssigned < totalWorkspaceRequiredTransfer || this.props.loading
     return (
       <TransferOwnershipModal
         nextPage={this.onSetNextPage}
@@ -182,6 +189,7 @@ export default class TerminateModalFlow extends React.Component {
             transferData={this.getTransferData()}
             onAssignToUser={this.onAssignToUser}
           />
+          
         </WorkspaceGroupRows>
         <WorkspaceGroupRows
           workspaces={this.props.deleteWorkspaces}
@@ -206,6 +214,7 @@ export default class TerminateModalFlow extends React.Component {
             showCommentForm
             comment={this.state.comment}
             onChangeComment={this.onChangeComment}
+            feedbacks={this.state.feedbacks}
           />
         )
       case 'confirm':

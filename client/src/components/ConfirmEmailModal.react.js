@@ -2,7 +2,7 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { isLoading } from './LoadState'
+import { isLoading } from '../LoadState'
 
 class ConfirmEmailModal extends React.PureComponent {
   static propTypes = {
@@ -21,8 +21,9 @@ class ConfirmEmailModal extends React.PureComponent {
   }
 
   getStateButton = () => {
-    if (isLoading(this.props.terminateAccountStatus)) return true
+    console.log(this.state.markedConsequences, this.props.email)
     if (this.state.markedConsequences && this.props.email) return false
+    if (isLoading(this.props.terminateAccountStatus)) return true
     return true
   }
 
@@ -50,7 +51,7 @@ class ConfirmEmailModal extends React.PureComponent {
       <div>
         <h1>Delete account</h1>
         <p>This action cannot be undone.</p>
-        <div>Please enter your email: {this.renderFormInputPasssword()}</div>
+        <div>Please enter your email:ross@example.com {this.renderFormInputPasssword()}</div>
         <div style={{ marginTop: '1rem' }}>
           <label>
             <input

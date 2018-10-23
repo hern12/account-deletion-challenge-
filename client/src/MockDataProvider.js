@@ -36,11 +36,13 @@ export default class MockDataProvider extends React.Component {
           }
         )
         const data = await response.json()
-        this.setState({
-          loading: false,
-          requiredTransferWorkspaces: data.requiredTransferWorkspaces,
-          deleteWorkspaces: data.deleteWorkspaces,
-        })
+        if(data){
+          this.setState({
+            loading: false,
+            requiredTransferWorkspaces: data.requiredTransferWorkspaces,
+            deleteWorkspaces: data.deleteWorkspaces,
+          })
+        }
       },
 
       transferOwnershipStatus: {
@@ -139,6 +141,7 @@ export default class MockDataProvider extends React.Component {
       },
 
       rediectToHomepage: () => {
+        //console.log('delete complete')
         window.location = 'http://www.example.com/'
       },
     }

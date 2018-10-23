@@ -2,7 +2,7 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { feedbackSurveyItems } from './FeedbackSurveyItems'
+import { feedbackSurveyItems } from '../FeedbackSurveyItems'
 
 class FeedbackSurveyModal extends React.PureComponent {
   static propTypes = {
@@ -16,11 +16,23 @@ class FeedbackSurveyModal extends React.PureComponent {
 
   constructor(props) {
     super(props)
-    this.state = this.setInitialState()
+    const { feedbacks } = props
+    if(feedbacks){
+      this.state = this.setOldState(feedbacks)
+    }else{
+      this.state = this.setInitialState()
+    }
   }
 
   state = {
     isFocusCommentBox: false,
+  }
+
+  setOldState = (feedbacks) => {
+    return _.chain(feedbacks)
+        .map(item => [item.reason, true])
+        .fromPairs()
+        .value()
   }
 
   setInitialState = () => {
