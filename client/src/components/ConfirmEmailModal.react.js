@@ -20,9 +20,13 @@ class ConfirmEmailModal extends React.PureComponent {
     this.props.resetTerminateAccountStatus()
   }
 
+  checkEmail = (email) => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
   getStateButton = () => {
-    console.log(this.state.markedConsequences, this.props.email)
-    if (this.state.markedConsequences && this.props.email) return false
+    if (this.state.markedConsequences && this.checkEmail(this.props.email)) return false
     if (isLoading(this.props.terminateAccountStatus)) return true
     return true
   }
@@ -40,6 +44,7 @@ class ConfirmEmailModal extends React.PureComponent {
           placeholder="ross@example.com"
           style={{ width: '350px' }}
           onChange={this.props.onTypeEmail}
+          value={this.props.email}
         />
         <span style={{ color: 'red' }}>{errorMessage}</span>
       </div>
