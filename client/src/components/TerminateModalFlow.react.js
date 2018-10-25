@@ -30,8 +30,7 @@ export default class TerminateModalFlow extends React.Component {
     transferData: [],
     feedbacks: [],
     comment: '',
-    email: '',
-    count: 0
+    email: ''
   }
 
   componentDidMount() {
@@ -170,12 +169,19 @@ export default class TerminateModalFlow extends React.Component {
     this.setState({ email: e.target.value })
   }
 
+  checkTransferStatus = transferData => {
+    return _.filter(transferData, (item) => {
+      return item.status === 'completed'
+    })
+  }
+
   renderTransferModal() {
     const transferData = this.getTransferData()
+    const checkAllStatus = this.checkTransferStatus(transferData).length >= 2
     const totalAssigned = transferData.length
     const totalWorkspaceRequiredTransfer = this.props.requiredTransferWorkspaces.length
     const totalWorkspaceDelete = this.props.deleteWorkspaces.length
-    const disabledNextPage = totalAssigned < totalWorkspaceRequiredTransfer || this.props.loading
+    const disabledNextPage = totalAssigned < totalWorkspaceRequiredTransfer || this.props.loading || !checkAllStatus
     return (
       <TransferOwnershipModal
         nextPage={this.onSetNextPage}
