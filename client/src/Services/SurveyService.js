@@ -79,7 +79,8 @@ export const submitToSurveyMonkeyDeleteAccount = async ({
   comment,
 }) => {
   const surveyPayload = getSurveyPayload(feedbackRefs, comment)
-
+  console.log(surveyPayload)
+  console.log(JSON.stringify(surveyPayload))
   const response = await window.fetch(
     'https://us-central1-tw-account-deletion-challenge.cloudfunctions.net/submitSurvey',
     {

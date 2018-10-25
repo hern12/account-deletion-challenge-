@@ -114,15 +114,20 @@ export default class TerminateModalFlow extends React.Component {
 
   onSetNextPage = () => {
     if (this.state.activeModal === 'transfer') {
-      this.setState({ activeModal: 'feedback' })
-    } else if (this.state.activeModal === 'feedback') {
+      this.setState({ 
+        activeModal: 'feedback' 
+      })
+    } 
+    else if (this.state.activeModal === 'feedback') {
+      console.log('feedback')
       const feedbackRefs = this.getRefsValues(this.refs, 'feedbackForm')
       this.setState({
         activeModal: 'confirm',
         feedbacks: this.getFeedBack(feedbackRefs)
+      }, () => {
+        console.log(this.state)
       })
     }
-    this.submitSurvey()
   }
 
   onGoToPreviousStep = () => {
