@@ -97,12 +97,15 @@ export default class TerminateModalFlow extends React.Component {
   }
 
   submitSurvey = () => {
-    const feedbackRefs = this.getRefsValues(this.refs, 'feedbackForm')
-    const surveyPayload = {
-      feedbackRefs,
-      comment: '',
+    if(!_.isEmpty(this.refs)){
+      console.log(this.refs)
+      const feedbackRefs = this.getRefsValues(this.refs, 'feedbackForm')
+      const surveyPayload = {
+        feedbackRefs,
+        comment: '',
+      }
+      submitToSurveyMonkeyDeleteAccount(surveyPayload)
     }
-    submitToSurveyMonkeyDeleteAccount(surveyPayload)
   }
 
   getFeedBack = (feedbackRefs) => {
@@ -124,10 +127,9 @@ export default class TerminateModalFlow extends React.Component {
       this.setState({
         activeModal: 'confirm',
         feedbacks: this.getFeedBack(feedbackRefs)
-      }, () => {
-        console.log(this.state)
       })
     }
+    this.submitSurvey()
   }
 
   onGoToPreviousStep = () => {
