@@ -21,6 +21,7 @@ export const isLoading = state =>
   state.status === STATUS_PENDING ||
   state.status === STATUS_FETCHING ||
   state.status === STATUS_REFRESHING
+  
 export const isLoadingFirstTime = state => state.status === STATUS_FETCHING
 export const isRefreshing = state => state.status === STATUS_REFRESHING
 export const isLoaded = state =>

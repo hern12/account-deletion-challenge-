@@ -31,6 +31,7 @@ export default class TerminateModalFlow extends React.Component {
     feedbacks: [],
     comment: '',
     email: '',
+    count: 0
   }
 
   componentDidMount() {
@@ -54,14 +55,16 @@ export default class TerminateModalFlow extends React.Component {
           assign.toUser._id === toUserId
         ) {
           result.push(Object.assign({}, assign, { status }))
-        } else {
+        } 
+        else {
           result.push(assign)
         }
         return result
       },
       []
     )
-    return updateData
+    const rmStatusError = _.reject(updateData, item => item.status === "error")
+    return rmStatusError
   }
 
   assignToUser = (workspace, user) => {

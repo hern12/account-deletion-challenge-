@@ -84,7 +84,8 @@ export default class MockDataProvider extends React.Component {
                   ...LoadState.completed,
                 },
               })
-            } else {
+            }
+            else {
               this.setState({
                 transferOwnershipStatus: {
                   workspaceId: workspace.spaceId,
