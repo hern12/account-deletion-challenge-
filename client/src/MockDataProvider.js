@@ -142,8 +142,8 @@ export default class MockDataProvider extends React.Component {
       },
 
       rediectToHomepage: () => {
-        //console.log('delete complete')
-        window.location = 'http://www.example.com/'
+        console.log('delete complete')
+        //window.location = 'http://www.example.com/'
       },
     }
   }
