@@ -17,6 +17,11 @@ class FeedbackSurveyModal extends React.PureComponent {
   constructor(props) {
     super(props)
     const { feedbacks } = props
+
+    this.state = {
+      isFocusCommentBox: false,
+    }  
+    
     if(feedbacks){
       this.state = this.setOldState(feedbacks)
     }else{
@@ -24,9 +29,6 @@ class FeedbackSurveyModal extends React.PureComponent {
     }
   }
 
-  state = {
-    isFocusCommentBox: false,
-  }
 
   setOldState = (feedbacks) => {
     return _.chain(feedbacks)

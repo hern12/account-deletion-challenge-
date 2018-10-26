@@ -4,6 +4,7 @@ import React from 'react'
 
 const TransferOwnershipModal = props => {
   const renderLoading = () => <div>Loading...</div>
+  console.log(props.disabledNextPage)
   return (
     <div>
       <h1>Transfer ownership</h1>
