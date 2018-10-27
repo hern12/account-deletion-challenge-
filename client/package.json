@@ -2,7 +2,8 @@
   "name": "account-deletion-challenge",
   "license": "MIT",
   "scripts": {
-    "serve": "cross-env NODE_ENV=development parcel src/index.html --out-dir out"
+    "serve": "cross-env NODE_ENV=development parcel src/index.html --out-dir out",
+    "test": "jest --watchAll"
   },
   "devDependencies": {
     "@types/autoprefixer": "6.7.3",
