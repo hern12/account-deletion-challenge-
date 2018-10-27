@@ -9,7 +9,7 @@ const WorkspaceGroupRows = props =>
       <div>
         {_.map(props.workspaces, workspace => (
           <div key={workspace.spaceId} style={{ marginTop: '1rem' }}>
-            <span>Workspace: {workspace.displayName}</span>
+            <span>Workspace: {workspace.displayName} {workspace.spaceId === 'workspace1' ? <div style={{color:'red'}}>{props.canSelect}</div> : null}</span>
             <span>
               {React.Children.count(props.children) === 0
                 ? null

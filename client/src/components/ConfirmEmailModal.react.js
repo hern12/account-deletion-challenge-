@@ -20,15 +20,24 @@ class ConfirmEmailModal extends React.PureComponent {
     this.props.resetTerminateAccountStatus()
   }
 
+
+
   checkEmail = (email) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
   }
 
   getStateButton = () => {
-    if (this.state.markedConsequences && this.checkEmail(this.props.email)) return false
     if (isLoading(this.props.terminateAccountStatus)) return true
+    if (this.state.markedConsequences && this.checkEmail(this.props.email)) return false
     return true
+  }
+
+  isPedding = () => {
+    if (isLoading(this.props.terminateAccountStatus)) return true
+    else{
+      return false
+    }
   }
 
   onToggleMarkedConsequences = () => {
@@ -68,7 +77,7 @@ class ConfirmEmailModal extends React.PureComponent {
           </label>
         </div>
         <div>
-          <button onClick={this.props.onBackButton}>Back</button>
+          <button onClick={this.props.onBackButton} disabled={this.isPedding()}>Back</button>
           <button
             onClick={this.props.onClickToDelete}
             disabled={this.getStateButton()}

@@ -51,6 +51,8 @@ export default class MockDataProvider extends React.Component {
         ...LoadState.pending,
       },
 
+      canSelect: '',
+
       transferOwnership: (user, workspace) => {
         this.setState(
           {
@@ -78,6 +80,7 @@ export default class MockDataProvider extends React.Component {
             )
             if (response.status === 200) {
               this.setState({
+                canSelect: '',
                 transferOwnershipStatus: {
                   workspaceId: workspace.spaceId,
                   toUserId: user._id,
@@ -85,8 +88,14 @@ export default class MockDataProvider extends React.Component {
                 },
               })
             }
+            else if(response.status === 409){
+              this.setState({
+                canSelect: 'This person is very busy please select other'
+              })
+            } 
             else {
               this.setState({
+                canSelect: '',
                 transferOwnershipStatus: {
                   workspaceId: workspace.spaceId,
                   toUserId: user._id,
@@ -117,10 +126,11 @@ export default class MockDataProvider extends React.Component {
               this.state.terminateAccountStatus
             ),
           })
-        } else {
+        }
+        else {
           this.setState({
             terminateAccountStatus: LoadState.handleLoadFailedWithError(
-              'Error deleting account'
+              'Error deleting account please try again'
             )(this.state.terminateAccountStatus),
           })
         }
@@ -137,12 +147,17 @@ export default class MockDataProvider extends React.Component {
       terminateAccountStatus: {},
       resetTerminateAccountStatus: () => {
         this.setState({
-          terminateAccountStatus: LoadState.pending,
+          terminateAccountStatus: {},
+        })
+      },
+
+      setPeddingTerminateAccoutStatus: () => {
+        this.setState({
+          terminateAccountStatus: LoadState.pending
         })
       },
 
       rediectToHomepage: () => {
-        //console.log('delete complete')
         window.location = 'http://www.example.com/'
       },
     }

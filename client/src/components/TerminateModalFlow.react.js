@@ -98,7 +98,6 @@ export default class TerminateModalFlow extends React.Component {
 
   submitSurvey = () => {
     if(!_.isEmpty(this.refs)){
-      console.log(this.refs)
       const feedbackRefs = this.getRefsValues(this.refs, 'feedbackForm')
       const surveyPayload = {
         feedbackRefs,
@@ -122,7 +121,6 @@ export default class TerminateModalFlow extends React.Component {
       })
     } 
     else if (this.state.activeModal === 'feedback') {
-      console.log('feedback')
       const feedbackRefs = this.getRefsValues(this.refs, 'feedbackForm')
       this.setState({
         activeModal: 'confirm',
@@ -165,6 +163,7 @@ export default class TerminateModalFlow extends React.Component {
         })),
         reason: this.state.feedbacks,
       }
+      this.props.setPeddingTerminateAccoutStatus()
       this.props.terminateAccount(payload)
     } else {
       const error = 'Invalid email'
@@ -189,6 +188,7 @@ export default class TerminateModalFlow extends React.Component {
     const totalWorkspaceRequiredTransfer = this.props.requiredTransferWorkspaces.length
     const totalWorkspaceDelete = this.props.deleteWorkspaces.length
     const disabledNextPage = totalAssigned < totalWorkspaceRequiredTransfer || this.props.loading || !checkAllStatus
+    const userStatus = this.props.canSelect
     return (
       <TransferOwnershipModal
         nextPage={this.onSetNextPage}
@@ -199,13 +199,13 @@ export default class TerminateModalFlow extends React.Component {
           workspaces={this.props.requiredTransferWorkspaces}
           groupTitle="The following workspaces require ownership transfer:"
           shouldDisplay={totalWorkspaceRequiredTransfer > 0}
+          canSelect={userStatus}
         >
           <AssignOwnership
             user={this.props.user}
             transferData={this.getTransferData()}
             onAssignToUser={this.onAssignToUser}
           />
-          
         </WorkspaceGroupRows>
         <WorkspaceGroupRows
           workspaces={this.props.deleteWorkspaces}
