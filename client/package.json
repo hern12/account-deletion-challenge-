@@ -2,30 +2,31 @@
   "name": "account-deletion-challenge",
   "license": "MIT",
   "scripts": {
-    "serve": "cross-env NODE_ENV=development parcel src/index.html --out-dir out"
+    "serve": "cross-env NODE_ENV=development parcel src/index.html --out-dir out",
+    "test": "jest --watchAll"
   },
   "devDependencies": {
-    "@types/autoprefixer": "9.1.0",
-    "@types/lodash": "4.14.117",
-    "@types/parcel-bundler": "1.10.1",
-    "@types/react": "16.4.18",
+    "@types/autoprefixer": "6.7.3",
+    "@types/lodash": "4.14.116",
+    "@types/parcel-bundler": "1.10.0",
+    "@types/react": "16.4.16",
     "@types/react-dom": "16.0.9",
     "babel-jest": "^23.6.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "cross-env": "5.2.0",
+    "cross-env": "5.1.4",
     "jest": "^23.6.0",
     "react-test-renderer": "^16.6.0",
     "react-testing-library": "^5.2.3"
   },
   "dependencies": {
-    "autoprefixer": "9.3.1",
-    "babel-preset-react-app": "5.0.4",
-    "lodash": "4.17.11",
-    "parcel-bundler": "~1.10.3",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0"
+    "autoprefixer": "8.2.0",
+    "babel-preset-react-app": "3.1.1",
+    "lodash": "4.17.5",
+    "parcel-bundler": "~1.7.0",
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0"
   },
   "postcss": {
     "modules": false,

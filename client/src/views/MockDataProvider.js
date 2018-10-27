@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import * as LoadState from './LoadState'
+import * as LoadState from '../helpers/LoadState'
 
 export default class MockDataProvider extends React.Component {
   static propTypes = {
