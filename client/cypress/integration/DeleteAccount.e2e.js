@@ -22,7 +22,7 @@ describe('Delete account flow', () => {
         cy.get('input[type="text"]').type('ross@example.com')
         //checked checkbox I understand the consequences.
         cy.contains("I understand the consequences.").children('input').check() 
-        //click button Delete my account
+        //click button Delete my account 
         cy.get('button').contains('Delete my account').click()
       });  
   });
