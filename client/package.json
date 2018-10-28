@@ -3,7 +3,8 @@
   "license": "MIT",
   "scripts": {
     "serve": "cross-env NODE_ENV=development parcel src/index.html --out-dir out",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "test:cypress": "cypress open"
   },
   "devDependencies": {
     "@types/autoprefixer": "6.7.3",
@@ -16,10 +17,11 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "cross-env": "5.1.4",
+    "cypress": "^3.1.0",
+    "enzyme": "^2.9.1",
     "jest": "^23.6.0",
     "react-test-renderer": "^16.6.0",
-    "react-testing-library": "^5.2.3",
-    "enzyme": "^2.9.1"
+    "react-testing-library": "^5.2.3"
   },
   "dependencies": {
     "autoprefixer": "8.2.0",

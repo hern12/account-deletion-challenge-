@@ -45,8 +45,8 @@ describe('<AssignOwnership /> Test Suite', () => {
       ]
     
    const assignOwnership = shallow(<AssignOwnership workspace={tempData} />)
-      test('test text', () => {
-        expect(assignOwnership.find('select')).toHaveLength(1);
-      })
+    it('test', () => {
+        expect(assignOwnership.find('div')).toHaveLength(1);
+    })
 
 })

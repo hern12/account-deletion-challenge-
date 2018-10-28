@@ -62,6 +62,7 @@ export default class TerminateModalFlow extends React.Component {
       },
       []
     )
+    console.log(this.props.transferOwnershipStatus)
     //const rmStatusError = _.reject(updateData, item => item.status === "error")
     return updateData
   }
@@ -191,13 +192,14 @@ export default class TerminateModalFlow extends React.Component {
 
   renderTransferModal() {
     const transferData = this.getTransferData()
+    console.log(transferData)
     const totalAssigned = transferData.length
     const totalWorkspaceRequiredTransfer = this.props.requiredTransferWorkspaces.length
-    console.log(this.props.requiredTransferWorkspaces)
     const totalWorkspaceDelete = this.props.deleteWorkspaces.length
     const getStatusError = this.getStatusError(transferData)
     const checkAllStatus = this.checkTransferStatus(transferData).length >= totalWorkspaceRequiredTransfer
     const disabledNextPage = totalAssigned < totalWorkspaceRequiredTransfer || this.props.loading || !checkAllStatus
+    console.log(totalAssigned, totalWorkspaceRequiredTransfer, this.props.loading, !checkAllStatus)
     return (
       <TransferOwnershipModal
         nextPage={this.onSetNextPage}
