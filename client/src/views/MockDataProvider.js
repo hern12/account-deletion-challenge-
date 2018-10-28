@@ -51,8 +51,6 @@ export default class MockDataProvider extends React.Component {
         ...LoadState.pending,
       },
 
-      canSelect: '',
-
       transferOwnership: (user, workspace) => {
         this.setState(
           {
@@ -80,7 +78,6 @@ export default class MockDataProvider extends React.Component {
             )
             if (response.status === 200) {
               this.setState({
-                canSelect: '',
                 transferOwnershipStatus: {
                   workspaceId: workspace.spaceId,
                   toUserId: user._id,
@@ -88,14 +85,8 @@ export default class MockDataProvider extends React.Component {
                 },
               })
             }
-            else if(response.status === 409){
-              this.setState({
-                canSelect: 'This person is very busy please select other'
-              })
-            } 
             else {
               this.setState({
-                canSelect: '',
                 transferOwnershipStatus: {
                   workspaceId: workspace.spaceId,
                   toUserId: user._id,

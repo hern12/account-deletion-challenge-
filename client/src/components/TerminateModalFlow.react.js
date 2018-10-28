@@ -30,7 +30,7 @@ export default class TerminateModalFlow extends React.Component {
     transferData: [],
     feedbacks: [],
     comment: '',
-    email: ''
+    email: '',
   }
 
   componentDidMount() {
@@ -62,8 +62,8 @@ export default class TerminateModalFlow extends React.Component {
       },
       []
     )
-    const rmStatusError = _.reject(updateData, item => item.status === "error")
-    return rmStatusError
+    //const rmStatusError = _.reject(updateData, item => item.status === "error")
+    return updateData
   }
 
   assignToUser = (workspace, user) => {
@@ -181,14 +181,22 @@ export default class TerminateModalFlow extends React.Component {
     })
   }
 
+  getStatusError = transferDataArr => {
+    return _.filter(transferDataArr, (item) => {
+      if(item.status === 'error'){
+        return item.status === 'error'
+      }
+    })
+  }
+
   renderTransferModal() {
     const transferData = this.getTransferData()
-    const checkAllStatus = this.checkTransferStatus(transferData).length >= 2
     const totalAssigned = transferData.length
     const totalWorkspaceRequiredTransfer = this.props.requiredTransferWorkspaces.length
     const totalWorkspaceDelete = this.props.deleteWorkspaces.length
+    const getStatusError = this.getStatusError(transferData)
+    const checkAllStatus = this.checkTransferStatus(transferData).length >= totalWorkspaceRequiredTransfer
     const disabledNextPage = totalAssigned < totalWorkspaceRequiredTransfer || this.props.loading || !checkAllStatus
-    const userStatus = this.props.canSelect
     return (
       <TransferOwnershipModal
         nextPage={this.onSetNextPage}
@@ -199,7 +207,7 @@ export default class TerminateModalFlow extends React.Component {
           workspaces={this.props.requiredTransferWorkspaces}
           groupTitle="The following workspaces require ownership transfer:"
           shouldDisplay={totalWorkspaceRequiredTransfer > 0}
-          canSelect={userStatus}
+          userStatus={getStatusError}
         >
           <AssignOwnership
             user={this.props.user}
