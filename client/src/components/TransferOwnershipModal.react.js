@@ -7,7 +7,7 @@ const TransferOwnershipModal = props => {
   return (
     <div>
       <h1>Transfer ownership</h1>
-      <p>
+      <p className="hello">
         Before you leaving, it is required to transfer your tasks, projects and
         workspace admin rights to other person.
       </p>

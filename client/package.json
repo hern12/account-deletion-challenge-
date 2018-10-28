@@ -18,7 +18,8 @@
     "cross-env": "5.1.4",
     "jest": "^23.6.0",
     "react-test-renderer": "^16.6.0",
-    "react-testing-library": "^5.2.3"
+    "react-testing-library": "^5.2.3",
+    "enzyme": "^2.9.1"
   },
   "dependencies": {
     "autoprefixer": "8.2.0",
