@@ -3,27 +3,50 @@ import { shallow, mount, render } from 'enzyme';
 import TransferOwnershipModal from '../components/TransferOwnershipModal.react'
 import MockDataProvider from '../views/MockDataProvider'
 import TerminateModalFlow from '../components/TerminateModalFlow.react'
+import WorkspaceGroupRows from '../components/WorkspaceGroupRows.react'
+import AssignOwnership from '../components/AssignOwnership.react'
 
-describe('<MockDataProvider /> Test Suite', () => {
-    it('should have only one h1', () => {
-        expect(shallow(<TransferOwnershipModal />).contains(<h1>Transfer ownership</h1>)).toBe(true);
-    });
+describe('<AssignOwnership /> Test Suite', () => {
+    const tempData = [
+        {
+          "spaceId": "workspace1",
+          "displayName": "Lightning strike",
+          "transferableMembers": [
+            {
+              "_id": "user2",
+              "name": "Ryan Lynch"
+            },
+            {
+              "_id": "user3",
+              "name": "Riker Lynch"
+            },
+            {
+              "_id": "user4",
+              "name": "Rydel Lynch"
+            }
+          ]
+        },
+        {
+          "spaceId": "workspace2",
+          "displayName": "Time machine",
+          "transferableMembers": [
+            {
+              "_id": "user5",
+              "name": "Edward Bayer",
+              "workspaceId": "workspace3"
+            },
+            {
+              "_id": "user6",
+              "name": "Eli Brook",
+              "workspaceId": "workspace3"
+            }
+          ]
+        }
+      ]
+    
+   const assignOwnership = shallow(<AssignOwnership workspace={tempData} />)
+      test('test text', () => {
+        expect(assignOwnership.find('select')).toHaveLength(1);
+      })
 
-    it('should have only one button next', () => {
-        expect(render(<MockDataProvider>
-            {props => <TerminateModalFlow {...props} />}
-        </MockDataProvider>).find('button').length).toBe(1);
-    })
-
-    // it('should be selectable by class "foo"', function() {
-    //     expect(shallow(<Foo />).is('.foo')).toBe(true);
-    // });
-
-    // it('should mount in a full DOM', function() {
-    //     expect(mount(<Foo />).find('.foo').length).toBe(1);
-    // });
-
-    // it('should render to static HTML', function() {
-    //     expect(render(<Foo />).text()).toEqual('Bar');
-    // }); 
 })

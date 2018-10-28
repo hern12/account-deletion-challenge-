@@ -193,6 +193,7 @@ export default class TerminateModalFlow extends React.Component {
     const transferData = this.getTransferData()
     const totalAssigned = transferData.length
     const totalWorkspaceRequiredTransfer = this.props.requiredTransferWorkspaces.length
+    console.log(this.props.requiredTransferWorkspaces)
     const totalWorkspaceDelete = this.props.deleteWorkspaces.length
     const getStatusError = this.getStatusError(transferData)
     const checkAllStatus = this.checkTransferStatus(transferData).length >= totalWorkspaceRequiredTransfer
