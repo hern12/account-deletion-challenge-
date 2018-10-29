@@ -23,7 +23,7 @@ class ConfirmEmailModal extends React.PureComponent {
 
 
   checkEmail = (email) => {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /\S+@\S+\.\S+/;
     return re.test(String(email).toLowerCase());
   }
 
@@ -65,7 +65,7 @@ class ConfirmEmailModal extends React.PureComponent {
       <div>
         <h1>Delete account</h1>
         <p>This action cannot be undone.</p>
-        <div>Please enter your email:ross@example.com {this.renderFormInputPasssword()}</div>
+        <div>Please enter your email:{this.renderFormInputPasssword()}</div>
         <div style={{ marginTop: '1rem' }}>
           <label>
             <input
